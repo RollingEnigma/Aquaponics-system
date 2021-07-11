@@ -1,0 +1,21 @@
+import sys
+import Adafruit_DHT as dht
+import urllib2
+
+myAPI = 'IUKV2ZRBQW9MV407Q' 
+ThingsURL = 'https://api.thingspeak.com/update?api_key=%s' % myAPI 
+
+def DHT22_data():
+	humidity, temperature = dht.read_retry(dht.DHT22, 23) 
+	return humi, temp
+
+humidity, temp = DHT22_data()
+if isinstance(humidity, float) and isinstance(temp, float):
+	humi = '%.2f' % humidity 					   
+	temp = '%.2f' % temp
+			
+	coms = urllib2.urlopen(ThingsURL + '&field1=%s&field2=%s' % (temp, humi))
+	print coms.read()
+	coms.close()
+else:
+	print 'Error
